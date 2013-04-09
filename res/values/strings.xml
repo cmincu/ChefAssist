@@ -2,5 +2,7 @@
 <resources>
     <string name="app_name">ChefAssist</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_recipe">Reteta</string>    
+    <string name="title_activity_recipe">Reteta</string>
+    <string name="lblIngredients">Ingrediente</string>
+    <string name="lblPreparation">Preparare</string>    
 </resources>

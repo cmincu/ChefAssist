@@ -19,12 +19,24 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/lblIngredients"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lblIngredients" />
+
+        <TextView
             android:id="@+id/tvIngredients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp" />
 
+        <TextView
+            android:id="@+id/lblPreparation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lblPreparation" />
+        
         <TextView
             android:id="@+id/tvPreparation"
             android:layout_width="wrap_content"
