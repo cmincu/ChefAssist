@@ -3,6 +3,7 @@ package org.camin.views;
 import org.camin.chefassist.R;
 import org.camin.jpa.Recipe;
 import org.camin.util.Constants;
+import org.camin.util.Utils;
 import org.camin.ws.RecipesService;
 
 import android.app.Activity;
@@ -56,9 +57,13 @@ public class RecipesActivity extends Activity {
 	}
 
 	public void loadRecipesOnView() {
-		Recipe[] recipes = service.getRecipes();
-		RecipesAdapter recAdapter = new RecipesAdapter(this, recipes);
-		lvRecipes.setAdapter(recAdapter);
+		if (Utils.isOnline(this)) {
+			Recipe[] recipes = service.getRecipes();
+			RecipesAdapter recAdapter = new RecipesAdapter(this, recipes);
+			lvRecipes.setAdapter(recAdapter);
+			return;
+		}
+		Utils.showSimpleMessage(this, "No connection", "No Internet connection");
 	}
 
 }
