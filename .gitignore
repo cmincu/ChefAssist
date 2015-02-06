@@ -1,0 +1,8 @@
+# IntelliJ/Eclipse files #
+*.iml
+*.ipr
+*.iws
+.idea/*
+.classpath
+.project
+.settings/*
