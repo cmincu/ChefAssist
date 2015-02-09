@@ -29,6 +29,7 @@
             android:name="org.camin.views.RecipeActivity"
             android:label="@string/title_activity_recipe" >
         </activity>
+        <activity android:name="org.camin.views.AppPreferences" />
     </application>
 
 </manifest>

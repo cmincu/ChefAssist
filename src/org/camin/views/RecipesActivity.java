@@ -1,5 +1,6 @@
 package org.camin.views;
 
+import android.view.MenuItem;
 import org.camin.chefassist.R;
 import org.camin.jpa.Recipe;
 import org.camin.util.Constants;
@@ -54,6 +55,16 @@ public class RecipesActivity extends Activity {
 		getMenuInflater().inflate(R.menu.recipes, menu);
 		return true;
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+        case R.id.action_settings:
+            startActivity(new Intent(this.getApplicationContext(),AppPreferences.class));
+            break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 	public void loadRecipesOnView() {
 		if (Utils.isOnline(this)) {
