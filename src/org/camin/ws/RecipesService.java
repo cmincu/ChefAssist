@@ -1,38 +1,51 @@
 package org.camin.ws;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.ListView;
 import org.camin.jpa.Recipe;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.camin.views.RecipesAdapter;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-public class RecipesService {
+public class RecipesService extends AsyncTask<Void, Void, Recipe[]>
+{
 
-	private final String URL = "http://recipemanager-mincu.rhcloud.com/rest/";
+	private final String RestURL = "http://recipemanager-mincu.rhcloud.com/rest/";
 	private RestTemplate restTemplate;
-	private HttpEntity<?> requestEntity;
+    private Activity activity;
+    private ListView lvRecipes;
 
-	public RecipesService() {
-		HttpHeaders requestHeaders = new HttpHeaders();
-		requestHeaders.setAccept(Collections.singletonList(new MediaType(
-				"application", "json")));
-		requestEntity = new HttpEntity<Object>(requestHeaders);
-		MappingJacksonHttpMessageConverter messageConverter = new MappingJacksonHttpMessageConverter();
-		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
-		messageConverters.add(messageConverter);
+    public RecipesService(Activity activity, ListView lvRecipes)
+    {
+        this.activity = activity;
+        this.lvRecipes = lvRecipes;
+        restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
-		restTemplate = new RestTemplate();
-		restTemplate.setMessageConverters(messageConverters);
-	}
+    }
 
+    @Override protected Recipe[] doInBackground(Void... voids)
+    {
+        try {
+            ResponseEntity<Recipe[]> responseEntity = restTemplate.getForEntity(this.RestURL + "recipes", Recipe[].class);
+            Recipe[] recipes = responseEntity.getBody();
+            return recipes;
+        } catch (Exception e) {
+            Log.e("RecipesService", e.getMessage(), e);
+        }
+
+        return null;
+    }
+
+    protected void onPostExecute(Recipe[] recipes){
+        RecipesAdapter recAdapter = new RecipesAdapter(this.activity, recipes);
+        this.lvRecipes.setAdapter(recAdapter);
+    }
+
+    /*
 	public Recipe[] getRecipes() {
 		ResponseEntity<Recipe[]> responseEntity = restTemplate.exchange(URL
 				+ "recipes", HttpMethod.GET, requestEntity, Recipe[].class);
@@ -46,5 +59,5 @@ public class RecipesService {
 		Recipe recipe = responseEntity.getBody();
 		return recipe;
 	}
-
+*/
 }

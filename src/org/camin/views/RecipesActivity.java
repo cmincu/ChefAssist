@@ -25,9 +25,8 @@ public class RecipesActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recipes);
 
-		service = new RecipesService();
-
-		lvRecipes = (ListView) findViewById(R.id.lvRecipes);
+        lvRecipes = (ListView) findViewById(R.id.lvRecipes);
+        service = new RecipesService(this, lvRecipes);
 		loadRecipesOnView();
 
 		lvRecipes.setClickable(true);
@@ -58,9 +57,7 @@ public class RecipesActivity extends Activity {
 
 	public void loadRecipesOnView() {
 		if (Utils.isOnline(this)) {
-			Recipe[] recipes = service.getRecipes();
-			RecipesAdapter recAdapter = new RecipesAdapter(this, recipes);
-			lvRecipes.setAdapter(recAdapter);
+            service.execute();
 			return;
 		}
 		Utils.showSimpleMessage(this, "No connection", "No Internet connection");
