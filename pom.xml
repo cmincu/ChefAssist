@@ -31,7 +31,12 @@
             </snapshots>
         </repository>
     </repositories>
- 
+    
+    <properties>
+        <sonar.organization>cmincu</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    </properties>
+    
     <build>
         <sourceDirectory>src</sourceDirectory>
         <finalName>${project.artifactId}</finalName>
